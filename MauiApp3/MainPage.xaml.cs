@@ -3,6 +3,7 @@
     public partial class MainPage : ContentPage
     {
         private bool isXTurn = true; // Track whose turn it is
+        private int counter = 0; // Track the number of moves made
         public MainPage()
         {
             InitializeComponent();
@@ -28,14 +29,19 @@
                 }
 
                 isXTurn = !isXTurn; // Switch turns
+                counter++;
 
                 string who = WhoWon();
                 if (who != "")
                 {
                     await DisplayAlert("Game Over", $"{who} wins!", "OK");
                     ResetBoard();
+                } else if (counter == 9)
+                {
+                    await DisplayAlert("Game Over", $"Nobody won", "OK");
+                    counter = 0;
+                    ResetBoard();
                 }
-
             }
         }
 
@@ -86,6 +92,9 @@
 
             if (Button11.Text == Button22.Text && Button22.Text == Button33.Text && Button11.Text != null)
                 return Button11.Text;
+
+            if (Button13.Text == Button22.Text && Button22.Text == Button31.Text && Button13.Text != null)
+                return Button13.Text;
 
             return "";
         }
