@@ -8,7 +8,7 @@
             InitializeComponent();
         }
 
-        private void Cell_Clicked(object sender, EventArgs e)
+        private async void Cell_Clicked(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
 
@@ -18,7 +18,7 @@
                 {
                     btn.Text = "X";
                     btn.TextColor = Colors.White;         // X color
-                    btn.BackgroundColor = Color.FromArgb("#2C3E50"); // X background
+                    btn.BackgroundColor = Color.FromArgb("#64A5B0"); // X background
                 }
                 else
                 {
@@ -32,7 +32,8 @@
                 string who = WhoWon();
                 if (who != "")
                 {
-                    DisplayAlert("Game Over", $"{who} wins!", "OK");
+                    await DisplayAlert("Game Over", $"{who} wins!", "OK");
+                    ResetBoard();
                 }
 
             }
@@ -40,15 +41,27 @@
 
         private void ResetBoard()
         {
-            Button11.Text = null;
-            Button12.Text = null;
-            Button13.Text = null;
-            Button21.Text = null;
-            Button22.Text = null;
-            Button23.Text = null;
-            Button31.Text = null;
-            Button32.Text = null;
-            Button33.Text = null;
+            ResetButton(Button11);
+            ResetButton(Button12);
+            ResetButton(Button13);
+
+
+            ResetButton(Button21);
+            ResetButton(Button22);
+            ResetButton(Button23);
+
+            ResetButton(Button31);
+            ResetButton(Button32);
+            ResetButton(Button33);
+
+            isXTurn = true;
+        }
+
+        private void ResetButton(Button button)
+        {
+            button.Text = null;
+            button.TextColor = Colors.Black;         // O color
+            button.BackgroundColor = Color.FromArgb("#2C3E50"); // O background
         }
 
         public string WhoWon()
